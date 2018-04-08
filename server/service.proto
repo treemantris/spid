@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+service TemperatureController {
+    rpc SetTemperature(TemperatureSetRequest) returns (TemperatureSetResponse) {}
+    rpc GetTemperature(GetTemperatureRequest) returns (stream GetTemperatureResponse) {}
+}
+
+message TemperatureSetRequest {
+    float desiredTemperature = 1;
+}
+
+message TemperatureSetResponse {
+    float desiredTemperature = 1;
+}
+
+message GetTemperatureRequest {
+}
+
+message GetTemperatureResponse {
+    float temperature = 1;
+}
