@@ -3,6 +3,11 @@ import './App.css';
 import Thermostat from 'react-nest-thermostat'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css';
+import {grpc} from "grpc-web-client"
+import {TemperatureController} from "./generated/service_pb_service"
+import proto from "./generated/service_pb"
+
+const host = "http://localhost:8080"
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +18,24 @@ class App extends Component {
   render() {
       var targetTemperature = this.state.target
       var currentTemperature = 60
-      var updateTargetTemperature = (newValue) => this.setState({target:newValue})
+      var updateTargetTemperature = (newValue) => {
+          const temperatureSetRequest = new proto.TemperatureSetRequest()
+          temperatureSetRequest.setDesiredtemperature(newValue)
+
+          grpc.unary(TemperatureController.SetTemperature, {
+              host,
+              request: temperatureSetRequest,
+              onEnd: res => {
+                  const { status, statusMessage, headers, message, trailers } = res
+                  if (status === grpc.Code.OK && message) {
+                      console.log("all ok. got resp: ", message.toObject());
+                  } else {
+                      console.log("fail")
+                  }
+              }
+          })
+          this.setState({target:newValue})
+      }
       var props = {currentTemperature, targetTemperature}
       var props2 = {targetTemperature, updateTargetTemperature}
     return (

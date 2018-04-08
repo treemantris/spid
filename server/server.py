@@ -6,8 +6,8 @@ import concurrent.futures as futures
 
 class TemperatureController(pb.TemperatureControllerServicer):
     def SetTemperature(self, request, context):
-        print("Setting temperature to " + request.desiredTemperature)
-        return protos.TemperatureSetReponse(desiredTemperature=request.desiredTemperature)
+        print("Setting temperature to " + str(request.desiredTemperature))
+        return protos.TemperatureSetResponse(desiredTemperature=request.desiredTemperature)
 
     def GetTemperature(self, request, context):
         for i in range(1, 10):
