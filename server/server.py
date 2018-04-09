@@ -1,6 +1,7 @@
 import service_pb2_grpc as pb
 import service_pb2 as protos
 import grpc
+import time
 import concurrent.futures as futures
 
 
@@ -20,3 +21,6 @@ server.add_insecure_port('[::]:50051')
 server.start()
 
 print("Server Started")
+
+while True:
+    time.sleep(100)
