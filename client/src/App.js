@@ -12,12 +12,24 @@ const host = "http://localhost:8080"
 class App extends Component {
   constructor(props) {
       super(props)
-      this.state = {target: 70}
+      this.state = {target: 70, current: 60}
+      const getRequest = new proto.GetTemperatureRequest()
+      grpc.invoke(TemperatureController.GetTemperature, {
+          host, 
+          request: getRequest,
+          onMessage: (message) => {
+              console.log(message.getTemperature())
+              this.setState({...this.state, current: message.getTemperature()})
+          },
+          onEnd: (end) => {
+              console.log(end)
+          }
+      })
   }
 
   render() {
       var targetTemperature = this.state.target
-      var currentTemperature = 60
+      var currentTemperature = this.state.current
       var updateTargetTemperature = (newValue) => {
           const temperatureSetRequest = new proto.TemperatureSetRequest()
           temperatureSetRequest.setDesiredtemperature(newValue)

@@ -2,6 +2,7 @@ import service_pb2_grpc as pb
 import service_pb2 as protos
 import grpc
 import time
+import random
 import concurrent.futures as futures
 
 
@@ -11,7 +12,11 @@ class TemperatureController(pb.TemperatureControllerServicer):
         return protos.TemperatureSetResponse(desiredTemperature=request.desiredTemperature)
 
     def GetTemperature(self, request, context):
-        for i in range(1, 10):
+        i = 60
+        while True:
+            time.sleep(1)
+            print("sleeping")
+            i += random.randint(-1, 1)
             yield protos.GetTemperatureResponse(temperature=i)
 
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
