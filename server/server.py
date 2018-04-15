@@ -12,7 +12,7 @@ class TemperatureController(pb.TemperatureControllerServicer):
         return protos.TemperatureSetResponse(desiredTemperature=request.desiredTemperature)
 
     def GetTemperature(self, request, context):
-        i = 60
+        i = 130
         while True:
             time.sleep(1)
             print("sleeping")

@@ -8,11 +8,13 @@ import {TemperatureController} from "./generated/service_pb_service"
 import proto from "./generated/service_pb"
 
 const host = "http://localhost:8080"
+const minScale = 85
+const maxScale = 185
 
 class App extends Component {
   constructor(props) {
       super(props)
-      this.state = {target: 70, current: 60}
+      this.state = {target: 150, current: 110}
       const getRequest = new proto.GetTemperatureRequest()
       grpc.invoke(TemperatureController.GetTemperature, {
           host, 
@@ -54,9 +56,48 @@ class App extends Component {
       <div className="App">
         <TemperatureDisplay {...props}/>
         <TemperatureSlider {...props2}/>
+        <InfoPanel {...props} />
+        <Overrides {...props} />
       </div>
     );
   }
+}
+
+function toFarenheit(celcius) {
+    return celcius * 1.8  + 32
+}
+
+class InfoPanel extends Component {
+    render() {
+        var {currentTemperature, targetTemperature} = this.props
+        var currentFarenheit = toFarenheit(currentTemperature)
+        var targetFarenheit = toFarenheit(targetTemperature)
+        return ( 
+            <div>
+            <div>
+            {"Current temperature: " + currentTemperature + "°C " + "(" + currentFarenheit + "°F) "}
+            </div>
+            <div>
+            {"Target temperature: " + targetTemperature + "°C " + "(" + targetFarenheit + "°F) "}
+            </div>
+            </div>
+        )
+    }
+}
+
+class Overrides extends Component {
+    render() {
+        return (
+            <div>
+            <div>
+            {"Override heat "}
+            </div>
+            <div>
+            {"Override cool"}
+            </div>
+            </div>
+        )
+    }
 }
 
 class TemperatureDisplay extends Component {
@@ -69,7 +110,7 @@ class TemperatureDisplay extends Component {
             hvacMode = "cooling"
         else
             hvacMode = "off"
-        var newProps =  {ambientTemperature: currentTemperature, targetTemperature, hvacMode}
+        var newProps =  {minValue: minScale, maxValue: maxScale, ambientTemperature: currentTemperature, targetTemperature, hvacMode}
         return (
             <div>
                 <Thermostat {...newProps}/>
@@ -83,7 +124,7 @@ class TemperatureSlider extends Component {
         var {targetTemperature, updateTargetTemperature} = this.props
         return (
             <div>
-                <Slider defaultValue={targetTemperature} onChange={updateTargetTemperature}/>
+                <Slider min={minScale} max={maxScale} defaultValue={targetTemperature} onChange={updateTargetTemperature}/>
             </div>
         )
     }
