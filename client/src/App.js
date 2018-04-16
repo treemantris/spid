@@ -3,9 +3,11 @@ import './App.css';
 import Thermostat from 'react-nest-thermostat'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css';
+import "react-toggle-switch/dist/css/switch.min.css"
 import {grpc} from "grpc-web-client"
 import {TemperatureController} from "./generated/service_pb_service"
 import proto from "./generated/service_pb"
+import Switch from 'react-toggle-switch'
 
 const host = "http://localhost:8080"
 const minScale = 85
@@ -14,13 +16,12 @@ const maxScale = 185
 class App extends Component {
   constructor(props) {
       super(props)
-      this.state = {target: 150, current: 110}
+      this.state = {target: 150, current: 110, overrides: {heat:false, cool:false}}
       const getRequest = new proto.GetTemperatureRequest()
       grpc.invoke(TemperatureController.GetTemperature, {
           host, 
           request: getRequest,
           onMessage: (message) => {
-              console.log(message.getTemperature())
               this.setState({...this.state, current: message.getTemperature()})
           },
           onEnd: (end) => {
@@ -50,14 +51,20 @@ class App extends Component {
           })
           this.setState({target:newValue})
       }
+
+      var updateOverrides = (newValue) => {
+          this.setState({...this.state, overrides: {...this.state.overrides, ...newValue}})
+      }
+
       var props = {currentTemperature, targetTemperature}
       var props2 = {targetTemperature, updateTargetTemperature}
+      var props3 = {updateOverrides, overrides: this.state.overrides}
     return (
       <div className="App">
         <TemperatureDisplay {...props}/>
         <TemperatureSlider {...props2}/>
         <InfoPanel {...props} />
-        <Overrides {...props} />
+        <Overrides {...props3} />
       </div>
     );
   }
@@ -87,13 +94,16 @@ class InfoPanel extends Component {
 
 class Overrides extends Component {
     render() {
+        const {updateOverrides, overrides} = this.props
         return (
             <div>
             <div>
-            {"Override heat "}
+            {"Override heat "} 
+            <Switch on={overrides.heat} onClick={()=>{updateOverrides({heat:!overrides.heat, cool:false})}}/>
             </div>
             <div>
             {"Override cool"}
+            <Switch on={overrides.cool} onClick={()=>{updateOverrides({cool:!overrides.cool, heat:false})}}/>
             </div>
             </div>
         )
