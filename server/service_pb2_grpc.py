@@ -24,6 +24,11 @@ class TemperatureControllerStub(object):
         request_serializer=service__pb2.GetTemperatureRequest.SerializeToString,
         response_deserializer=service__pb2.GetTemperatureResponse.FromString,
         )
+    self.SetOverrides = channel.unary_unary(
+        '/TemperatureController/SetOverrides',
+        request_serializer=service__pb2.SetOverridesRequest.SerializeToString,
+        response_deserializer=service__pb2.SetOverridesResponse.FromString,
+        )
 
 
 class TemperatureControllerServicer(object):
@@ -44,6 +49,13 @@ class TemperatureControllerServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def SetOverrides(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_TemperatureControllerServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -56,6 +68,11 @@ def add_TemperatureControllerServicer_to_server(servicer, server):
           servicer.GetTemperature,
           request_deserializer=service__pb2.GetTemperatureRequest.FromString,
           response_serializer=service__pb2.GetTemperatureResponse.SerializeToString,
+      ),
+      'SetOverrides': grpc.unary_unary_rpc_method_handler(
+          servicer.SetOverrides,
+          request_deserializer=service__pb2.SetOverridesRequest.FromString,
+          response_serializer=service__pb2.SetOverridesResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

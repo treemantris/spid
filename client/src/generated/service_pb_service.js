@@ -27,5 +27,14 @@ TemperatureController.GetTemperature = {
   responseType: service_pb.GetTemperatureResponse
 };
 
+TemperatureController.SetOverrides = {
+  methodName: "SetOverrides",
+  service: TemperatureController,
+  requestStream: false,
+  responseStream: false,
+  requestType: service_pb.SetOverridesRequest,
+  responseType: service_pb.SetOverridesResponse
+};
+
 exports.TemperatureController = TemperatureController;
 

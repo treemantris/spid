@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='service.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\rservice.proto\"3\n\x15TemperatureSetRequest\x12\x1a\n\x12\x64\x65siredTemperature\x18\x01 \x01(\x02\"4\n\x16TemperatureSetResponse\x12\x1a\n\x12\x64\x65siredTemperature\x18\x01 \x01(\x02\"\x17\n\x15GetTemperatureRequest\"-\n\x16GetTemperatureResponse\x12\x13\n\x0btemperature\x18\x01 \x01(\x02\x32\xa3\x01\n\x15TemperatureController\x12\x43\n\x0eSetTemperature\x12\x16.TemperatureSetRequest\x1a\x17.TemperatureSetResponse\"\x00\x12\x45\n\x0eGetTemperature\x12\x16.GetTemperatureRequest\x1a\x17.GetTemperatureResponse\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\rservice.proto\"3\n\x15TemperatureSetRequest\x12\x1a\n\x12\x64\x65siredTemperature\x18\x01 \x01(\x02\"4\n\x16TemperatureSetResponse\x12\x1a\n\x12\x64\x65siredTemperature\x18\x01 \x01(\x02\"\x17\n\x15GetTemperatureRequest\"-\n\x16GetTemperatureResponse\x12\x13\n\x0btemperature\x18\x01 \x01(\x02\"<\n\x13SetOverridesRequest\x12%\n\roverrideState\x18\x01 \x01(\x0b\x32\x0e.OverrideState\"=\n\x14SetOverridesResponse\x12%\n\roverrideState\x18\x01 \x01(\x0b\x32\x0e.OverrideState\"+\n\rOverrideState\x12\x0c\n\x04heat\x18\x01 \x01(\x08\x12\x0c\n\x04\x63ool\x18\x02 \x01(\x08\x32\xe2\x01\n\x15TemperatureController\x12\x43\n\x0eSetTemperature\x12\x16.TemperatureSetRequest\x1a\x17.TemperatureSetResponse\"\x00\x12\x45\n\x0eGetTemperature\x12\x16.GetTemperatureRequest\x1a\x17.GetTemperatureResponse\"\x00\x30\x01\x12=\n\x0cSetOverrides\x12\x14.SetOverridesRequest\x1a\x15.SetOverridesResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -141,10 +141,115 @@ _GETTEMPERATURERESPONSE = _descriptor.Descriptor(
   serialized_end=194,
 )
 
+
+_SETOVERRIDESREQUEST = _descriptor.Descriptor(
+  name='SetOverridesRequest',
+  full_name='SetOverridesRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='overrideState', full_name='SetOverridesRequest.overrideState', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=196,
+  serialized_end=256,
+)
+
+
+_SETOVERRIDESRESPONSE = _descriptor.Descriptor(
+  name='SetOverridesResponse',
+  full_name='SetOverridesResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='overrideState', full_name='SetOverridesResponse.overrideState', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=258,
+  serialized_end=319,
+)
+
+
+_OVERRIDESTATE = _descriptor.Descriptor(
+  name='OverrideState',
+  full_name='OverrideState',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='heat', full_name='OverrideState.heat', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='cool', full_name='OverrideState.cool', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=321,
+  serialized_end=364,
+)
+
+_SETOVERRIDESREQUEST.fields_by_name['overrideState'].message_type = _OVERRIDESTATE
+_SETOVERRIDESRESPONSE.fields_by_name['overrideState'].message_type = _OVERRIDESTATE
 DESCRIPTOR.message_types_by_name['TemperatureSetRequest'] = _TEMPERATURESETREQUEST
 DESCRIPTOR.message_types_by_name['TemperatureSetResponse'] = _TEMPERATURESETRESPONSE
 DESCRIPTOR.message_types_by_name['GetTemperatureRequest'] = _GETTEMPERATUREREQUEST
 DESCRIPTOR.message_types_by_name['GetTemperatureResponse'] = _GETTEMPERATURERESPONSE
+DESCRIPTOR.message_types_by_name['SetOverridesRequest'] = _SETOVERRIDESREQUEST
+DESCRIPTOR.message_types_by_name['SetOverridesResponse'] = _SETOVERRIDESRESPONSE
+DESCRIPTOR.message_types_by_name['OverrideState'] = _OVERRIDESTATE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TemperatureSetRequest = _reflection.GeneratedProtocolMessageType('TemperatureSetRequest', (_message.Message,), dict(
@@ -175,6 +280,27 @@ GetTemperatureResponse = _reflection.GeneratedProtocolMessageType('GetTemperatur
   ))
 _sym_db.RegisterMessage(GetTemperatureResponse)
 
+SetOverridesRequest = _reflection.GeneratedProtocolMessageType('SetOverridesRequest', (_message.Message,), dict(
+  DESCRIPTOR = _SETOVERRIDESREQUEST,
+  __module__ = 'service_pb2'
+  # @@protoc_insertion_point(class_scope:SetOverridesRequest)
+  ))
+_sym_db.RegisterMessage(SetOverridesRequest)
+
+SetOverridesResponse = _reflection.GeneratedProtocolMessageType('SetOverridesResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SETOVERRIDESRESPONSE,
+  __module__ = 'service_pb2'
+  # @@protoc_insertion_point(class_scope:SetOverridesResponse)
+  ))
+_sym_db.RegisterMessage(SetOverridesResponse)
+
+OverrideState = _reflection.GeneratedProtocolMessageType('OverrideState', (_message.Message,), dict(
+  DESCRIPTOR = _OVERRIDESTATE,
+  __module__ = 'service_pb2'
+  # @@protoc_insertion_point(class_scope:OverrideState)
+  ))
+_sym_db.RegisterMessage(OverrideState)
+
 
 
 _TEMPERATURECONTROLLER = _descriptor.ServiceDescriptor(
@@ -183,8 +309,8 @@ _TEMPERATURECONTROLLER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=197,
-  serialized_end=360,
+  serialized_start=367,
+  serialized_end=593,
   methods=[
   _descriptor.MethodDescriptor(
     name='SetTemperature',
@@ -202,6 +328,15 @@ _TEMPERATURECONTROLLER = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_GETTEMPERATUREREQUEST,
     output_type=_GETTEMPERATURERESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SetOverrides',
+    full_name='TemperatureController.SetOverrides',
+    index=2,
+    containing_service=None,
+    input_type=_SETOVERRIDESREQUEST,
+    output_type=_SETOVERRIDESRESPONSE,
     options=None,
   ),
 ])

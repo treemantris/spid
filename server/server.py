@@ -7,6 +7,10 @@ import concurrent.futures as futures
 
 
 class TemperatureController(pb.TemperatureControllerServicer):
+    def __init__(self):
+        self.overrideHeat = False
+        self.overrideCool = False
+
     def SetTemperature(self, request, context):
         print("Setting temperature to " + str(request.desiredTemperature))
         return protos.TemperatureSetResponse(desiredTemperature=request.desiredTemperature)
@@ -18,6 +22,12 @@ class TemperatureController(pb.TemperatureControllerServicer):
             print("sleeping")
             i += random.randint(-1, 1)
             yield protos.GetTemperatureResponse(temperature=i)
+
+    def SetOverrides(self, request, context):
+        self.overrideHeat = request.overrideState.heat
+        self.overrideCool = request.overrideState.cool
+        print("Setting overrides, heat: " + str(request.overrideState.heat) + " cool: " + str(request.overrideState.cool))
+        return protos.SetOverridesResponse(overrideState=request.overrideState)
 
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 pb.add_TemperatureControllerServicer_to_server(

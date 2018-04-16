@@ -3,6 +3,7 @@ syntax = "proto3";
 service TemperatureController {
     rpc SetTemperature(TemperatureSetRequest) returns (TemperatureSetResponse) {}
     rpc GetTemperature(GetTemperatureRequest) returns (stream GetTemperatureResponse) {}
+    rpc SetOverrides(SetOverridesRequest) returns (SetOverridesResponse) {}
 }
 
 message TemperatureSetRequest {
@@ -18,4 +19,17 @@ message GetTemperatureRequest {
 
 message GetTemperatureResponse {
     float temperature = 1;
+}
+
+message SetOverridesRequest {
+    OverrideState overrideState = 1;
+}
+
+message SetOverridesResponse {
+    OverrideState overrideState = 1;
+}
+
+message OverrideState {
+    bool heat = 1;
+    bool cool = 2;
 }

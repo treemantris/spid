@@ -53,7 +53,25 @@ class App extends Component {
       }
 
       var updateOverrides = (newValue) => {
-          this.setState({...this.state, overrides: {...this.state.overrides, ...newValue}})
+          const setOverridesRequest = new proto.SetOverridesRequest()
+          const desiredState = new proto.OverrideState()
+          desiredState.setHeat(newValue.heat)
+          desiredState.setCool(newValue.cool)
+          setOverridesRequest.setOverridestate(desiredState)
+          grpc.unary(TemperatureController.SetOverrides, {
+              host,
+              request: setOverridesRequest,
+              onEnd: res => {
+                  const { status, statusMessage, headers, message, trailers } = res
+                  if (status === grpc.Code.OK && message) {
+                      console.log("all ok. got resp: ", message.toObject());
+                      const newState = {heat: message.getOverridestate().getHeat(), cool: message.getOverridestate().getCool()}
+                      this.setState({...this.state, overrides: {...this.state.overrides, ...newState}})
+                  } else {
+                      console.log("fail")
+                  }
+              }
+          })
       }
 
       var props = {currentTemperature, targetTemperature}
